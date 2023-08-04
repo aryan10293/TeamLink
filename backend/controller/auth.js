@@ -3,13 +3,6 @@ const validator = require("validator");
 const User = require("../model/User");
 
 module.exports = {
-    getCreateAccount: (req,res) => {
-
-        res.render("create.ejs")
-    },
-    getLogin: (req,res) => {
-      res.render("login.ejs")
-  },
     postCreateAccount: (req, res, next) => {
       console.log(req.body)
       // console.log(req.body.userName)
@@ -115,7 +108,7 @@ module.exports = {
       },
       checkUser:  async (req,res) => {
         try {
-          if(req.params.is !== null){
+          if(req.params.id !== null){
             const getUser = await User.find({_id: req.params.id})
             res.send( getUser )
           }

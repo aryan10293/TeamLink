@@ -9,7 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
-const mainRoutes = require("./routes/routes");
+const mainRoutes = require("./routes/main");
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 //const tweetRoutes = require("./routes/tweet");
@@ -24,14 +24,14 @@ connectDB();
 
 
 app.use(cors({
-  origin: 'https://localhost:2013',
+  origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 const server = http.createServer(app)
 const io = new Server(server, {
   cors: {
-    origin: 'https://localhost:2013',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
   }
@@ -81,5 +81,5 @@ app.use(
   })
 
   server.listen(process.env.PORT, () => {
-    console.log("Server is running, you better catch it!");
+    console.log("Server is running, you better catch it!", `runninf on port ${process.env.PORT}`);
   });
