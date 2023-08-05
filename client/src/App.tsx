@@ -4,9 +4,13 @@ import { Routes, Route } from 'react-router-dom'
 // import { Navigate } from 'react-router-dom';
 import RegisterDisplay from './pages/RegisterDisplay';
 import LoginDisplay from './pages/LoginDisplay';
+import EditProfileDisplay from './pages/EditProfileDisplay';
 function App() {
   return (
-      <Routes>       
+      <Routes>
+          <Route 
+          path="/edit"
+          element={  <EditProfileDisplay /> } />       
           <Route 
           path="/register"
           element={  <RegisterDisplay /> } />
