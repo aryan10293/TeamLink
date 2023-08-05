@@ -15,6 +15,7 @@
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
     "react-tinder-card": "^1.6.2",
+    "tailwind": "^4.0.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
   }
 }
