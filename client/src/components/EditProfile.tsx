@@ -11,6 +11,24 @@ function EditProfile() {
     const [bio, setBio] = React.useState<string>('')
     const [dob, setDob] = React.useState<string>('')
     const { id } = useParams();
+    const convertBase64 = (file: any) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file);
+
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        } catch (error) {
+          reject(error);
+        }
+      });
+    };
     const userProfile: userData = {
         username: username,
         email: email,
@@ -20,6 +38,7 @@ function EditProfile() {
         weight: weight,
         dob: dob,
         bio: bio,
+        videos: []
     }
 
     interface userData {
@@ -31,11 +50,36 @@ function EditProfile() {
         weight: string,
         dob: string,
         bio: string, 
+        videos: string[]
     }
 
-    const handleClick = async (e: FormEvent) => {
-        e.preventDefault()
-        console.log(userProfile)
+    const handleClick = async (e:any) => {
+          e.preventDefault()
+       let media1 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].childNodes[1].files[0]
+       let media2 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[1].files[0]
+       let media3 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[2].childNodes[0].childNodes[1].files[0]
+       console.log(media1,media2,media3)
+       //if media are undefined make something happen
+
+
+
+       
+    //   if(img !== undefined){
+    //     img = await convertBase64(img)
+    //     obj.profilePic = img
+    //   }
+    //   try {
+    //         const response = await fetch(`https://lockerroom2-0.onrender.com/editprofile/${id}`, {
+    //             method: 'PUT',
+    //             headers: {'Content-Type': 'application/json'},
+    //             body: JSON.stringify({obj, id})
+    //             })
+    //         const data = await response.json()
+    //         console.log(data)
+    //         navigate(`/profile/${id}`)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
     }
   return (
     <section className="py-1 bg-blueGray-50">
@@ -175,7 +219,7 @@ function EditProfile() {
                 </div>
               </div>
                 <div className="relative w-full mb-3">
-                    <button type="submit" className="text-white bg-blue-500 border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">Submit</button>
+                    <button type="submit" className="lol text-white border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">Submit</button>
                 </div>
             </form>
           </div>
