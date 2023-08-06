@@ -28,7 +28,7 @@ function Login() {
         if (login.ok) {
           const loginData = await login.json();
           localStorage.setItem('loginUser', loginData._id)
-          window.location.href = "/dashboard"
+          window.location.href = `edit/${loginData._id}`
           setPassword('');
           setEmail('');
         } else {

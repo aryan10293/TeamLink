@@ -9,7 +9,7 @@ function App() {
   return (
       <Routes>
           <Route 
-          path="/edit"
+          path="/edit/:id"
           element={  <EditProfileDisplay /> } />       
           <Route 
           path="/register"
