@@ -58,28 +58,25 @@ function EditProfile() {
        let media1 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].childNodes[1].files[0]
        let media2 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[1].files[0]
        let media3 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[2].childNodes[0].childNodes[1].files[0]
-       console.log(media1,media2,media3)
-       //if media are undefined make something happen
 
+       if(media1 !== undefined) media1 = await convertBase64(media1)
+       if(media2 !== undefined) media2 = await convertBase64(media2)
+       if(media3 !== undefined) media3 = await convertBase64(media3)
+       if(media1 !== undefined) userProfile.videos.push(media1)
+       if(media2 !== undefined) userProfile.videos.push(media2)
+       if(media3 !== undefined) userProfile.videos.push(media3)
 
-
-       
-    //   if(img !== undefined){
-    //     img = await convertBase64(img)
-    //     obj.profilePic = img
-    //   }
-    //   try {
-    //         const response = await fetch(`https://lockerroom2-0.onrender.com/editprofile/${id}`, {
-    //             method: 'PUT',
-    //             headers: {'Content-Type': 'application/json'},
-    //             body: JSON.stringify({obj, id})
-    //             })
-    //         const data = await response.json()
-    //         console.log(data)
-    //         navigate(`/profile/${id}`)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
+      try {
+            const response = await fetch(`http://localhost:2013/edit/${id}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({userProfile, id})
+                })
+            const data = await response.json()
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
   return (
     <section className="py-1 bg-blueGray-50">

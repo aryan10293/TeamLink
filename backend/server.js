@@ -12,6 +12,7 @@ const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 //const tweetRoutes = require("./routes/tweet");
 
 //Use .env file in config folder
@@ -37,8 +38,8 @@ const io = new Server(server, {
   }
 })
 //Body Parsing
-app.use(express.urlencoded({ extended: true,  limit: '25mb'}));
-app.use(express.json({limit: '25mb'}));
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 //Logging
 app.use(logger("dev"));

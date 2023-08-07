@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controller/auth")
+const crudController = require("../controller/crud")
 const { ensureAuth, ensureGuest } = require("../middleware/auth")
 
 router.post('/createaccount', authController.postCreateAccount)
