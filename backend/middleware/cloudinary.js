@@ -1,5 +1,4 @@
 const cloudinary = require("cloudinary").v2;
-
 require("dotenv").config({ path: "./config/.env" });
 
 cloudinary.config({
@@ -11,26 +10,13 @@ cloudinary.config({
 const opts = {
   overwrite: true,
   invalidate: true,
-  resource_type: "auto",
+  resource_type: "video", // Set resource_type to "video"
 };
 
-const uploadImage = (image) => {
-  //imgage = > base64
+const uploadVideo = (video) => {
+  // video => base64 or buffer
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(image, opts, (error, result) => {
-      if (result && result.secure_url) {
-        console.log(result.secure_url);
-        return resolve(result.secure_url);
-      }
-      console.log(error.message);
-      return reject({ message: error.message });
-    });
-  });
-};
-module.exports = (image) => {
-  //imgage = > base64
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(image, opts, (error, result) => {
+    cloudinary.uploader.upload(video, opts, (error, result) => {
       if (result && result.secure_url) {
         console.log(result.secure_url);
         return resolve(result.secure_url);
@@ -41,11 +27,14 @@ module.exports = (image) => {
   });
 };
 
-module.exports.uploadMultipleImages = (images) => {
-  return new Promise((resolve, reject) => {
-    const uploads = images.map((base) => uploadImage(base));
-    Promise.all(uploads)
-      .then((values) => resolve(values))
-      .catch((err) => reject(err));
-  });
+module.exports = {
+  uploadVideo,
+  uploadMultipleVideos: (videos) => {
+    return new Promise((resolve, reject) => {
+      const uploads = videos.map((base) => uploadVideo(base));
+      Promise.all(uploads)
+        .then((values) => resolve(values))
+        .catch((err) => reject(err));
+    });
+  },
 };

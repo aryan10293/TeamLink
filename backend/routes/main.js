@@ -4,6 +4,7 @@ const router = express.Router();
 const authController = require("../controller/auth")
 const crudController = require("../controller/crud")
 const { ensureAuth, ensureGuest } = require("../middleware/auth")
+const cloudinary = require('../middleware/cloudinary');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
