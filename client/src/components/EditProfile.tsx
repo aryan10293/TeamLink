@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { FormEvent } from 'react';
+import Compressor from 'compressorjs';
 function EditProfile() {
     const [username, setUsername] = React.useState<string>('')
     const [email, setEmail] = React.useState<string>('')
@@ -55,27 +56,29 @@ function EditProfile() {
 
     const handleClick = async (e:any) => {
           e.preventDefault()
+
+
        let media1 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].childNodes[1].files[0]
        let media2 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[1].files[0]
        let media3 = e.target.childNodes[4].childNodes[0].childNodes[0].childNodes[1].childNodes[2].childNodes[0].childNodes[1].files[0]
 
-       if(media1 !== undefined) media1 = await convertBase64(media1)
-       if(media2 !== undefined) media2 = await convertBase64(media2)
-       if(media3 !== undefined) media3 = await convertBase64(media3)
-       if(media1 !== undefined) userProfile.videos.push(media1)
-       if(media2 !== undefined) userProfile.videos.push(media2)
-       if(media3 !== undefined) userProfile.videos.push(media3)
+        const formData = new FormData();
+        if (media1) formData.append('video1', media1);
+        if (media2) formData.append('video2', media2);
+        if (media3) formData.append('video3', media3);
 
-      try {
+        formData.append('userProfile', JSON.stringify(userProfile)); // Include the userProfile data
+
+        try {
             const response = await fetch(`http://localhost:2013/edit/${id}`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({userProfile, id})
-                })
-            const data = await response.json()
-            console.log(data)
+            method: 'PUT',
+            body: formData,
+            });
+
+            const data = await response.json();
+            console.log(data);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
   return (
@@ -119,7 +122,7 @@ function EditProfile() {
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                       First Name
                     </label>
-                    <input type="text" required onChange={(e) => setFirstname(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
+                    <input type="text"  onChange={(e) => setFirstname(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
@@ -127,7 +130,7 @@ function EditProfile() {
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                       Last Name
                     </label>
-                    <input type="text" required onChange={(e) => setLastname(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
+                    <input type="text"  onChange={(e) => setLastname(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
                   </div>
                 </div>
               </div>
@@ -176,7 +179,7 @@ function EditProfile() {
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                       Weight
                     </label>
-                    <input required type="text" onChange={(e) => setWeight(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
+                    <input  type="text" onChange={(e) => setWeight(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
@@ -184,7 +187,7 @@ function EditProfile() {
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                       Height
                     </label>
-                    <input required type="text" onChange={(e) => setHeight(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
+                    <input  type="text" onChange={(e) => setHeight(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
@@ -192,7 +195,7 @@ function EditProfile() {
                     <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                       Date Of Birth
                     </label>
-                    <input required type="date" onChange={(e) => setDob(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
+                    <input  type="date" onChange={(e) => setDob(e.target.value)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  />
                   </div>
                 </div>
               </div>
@@ -207,7 +210,7 @@ function EditProfile() {
                       Why should you get picked up?
                     </label>
                     <textarea
-                      required
+                      
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       rows={4}
                       onChange={(e) => setBio(e.target.value)}
