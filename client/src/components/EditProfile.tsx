@@ -11,7 +11,22 @@ function EditProfile() {
     const [weight, setWeight] = React.useState<string>('')
     const [bio, setBio] = React.useState<string>('')
     const [dob, setDob] = React.useState<string>('')
+    const [data, setData] = React.useState<any>()
     const { id } = useParams();
+      React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`https://discovery-au-02.audius.openplayer.org`);
+        const data = await response.json();
+        console.log(data)
+        //setData([...data.products]);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
     const convertBase64 = (file: any) => {
       return new Promise(async (resolve, reject) => {
         try {
